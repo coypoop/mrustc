@@ -5,7 +5,7 @@ RUST_SRC := ../rustc-1.19.0-src/src/
 
 PREFIX := prefix/
 BINDIR := $(PREFIX)bin/
-LIBDIR := $(PREFIX)lib/rustlib/x86_64-unknown-linux-gnu/lib/
+LIBDIR := $(PREFIX)lib/rustlib/x86_64-unknown-netbsd/lib/
 
 V ?= @
 
@@ -13,13 +13,13 @@ V ?= @
 all: $(BINDIR)rustc $(BINDIR)cargo $(LIBDIR)libstd.rlib $(BINDIR)hello_world
 
 RUSTFLAGS_liblibc := --cfg stdbuild
-RUSTFLAGS_libstd := -l dl -l rt -l pthread
+RUSTFLAGS_libstd := -l rt -l pthread
 RUSTFLAGS_libunwind := -l gcc_s
 
 $(RUSTC):
-	make -C ../ output/rustc -j 3
+	gmake -C ../ output/rustc -j 3
 ../output/cargo:
-	make -C ../ output/cargo -j 3
+	gmake -C ../ output/cargo -j 3
 
 $(BINDIR)rustc: $(RUSTC)
 	@mkdir -p $(dir $@)

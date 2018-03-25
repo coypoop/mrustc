@@ -115,6 +115,13 @@ namespace
                 ARCH_ARM32
                 };
         }
+        else if(target_name == "x86_64-unknown-netbsd")
+        {
+            return TargetSpec {
+                "unix", "netbsd", "gnu", CodegenMode::Gnu11, "x86_64-unknown-netbsd",
+                ARCH_X86_64
+                };
+        }
         else
         {
             ::std::cerr << "Unknown target name '" << target_name << "'" << ::std::endl;
@@ -150,6 +157,13 @@ void Target_SetCfg(const ::std::string& target_name)
     if( g_target.m_os_name == "openbsd" )
     {
         Cfg_SetFlag("openbsd");
+        Cfg_SetValue("target_vendor", "unknown");
+    }
+    Cfg_SetValue("target_env", g_target.m_env_name);
+
+    if( g_target.m_os_name == "netbsd" )
+    {
+        Cfg_SetFlag("netbsd");
         Cfg_SetValue("target_vendor", "unknown");
     }
     Cfg_SetValue("target_env", g_target.m_env_name);
